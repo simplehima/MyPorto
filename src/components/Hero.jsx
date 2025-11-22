@@ -31,8 +31,37 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto"
+          className="max-w-4xl mx-auto flex flex-col items-center"
         >
+          {/* Profile Picture */}
+          <div className="relative w-40 h-40 mb-8 group cursor-pointer">
+            {/* Rotating Border */}
+            <div className="absolute inset-[-6px] rounded-full border-2 border-transparent border-t-cyan-500 border-r-purple-500 border-b-pink-500 opacity-70 animate-spin-slow group-hover:opacity-100 transition-opacity"></div>
+
+            {/* Glow Effect */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-500 to-purple-600 blur-[20px] opacity-20 group-hover:opacity-50 transition-opacity duration-500"></div>
+
+            {/* Image Container */}
+            <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-black box-glow z-10">
+              <img
+                alt="Ibrahim Azab Profile"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                src="src\assets\pictures\Me1.png"
+              />
+
+              {/* Scanline Overlay */}
+              <div className="absolute inset-0 profile-scanline opacity-40 pointer-events-none"></div>
+
+              {/* Glitch Overlay on Hover */}
+              <div className="absolute inset-0 bg-cyan-500/20 opacity-0 group-hover:opacity-100 mix-blend-color-dodge transition-opacity duration-100"></div>
+            </div>
+
+            {/* Decorative Status Indicator */}
+            <div className="absolute bottom-2 right-2 z-20 w-6 h-6 bg-black rounded-full flex items-center justify-center border border-white/10">
+              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]"></div>
+            </div>
+          </div>
+
           {/* Status Badge */}
           <motion.div
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-8"
@@ -40,12 +69,8 @@ const Hero = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
           >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-            </span>
-            <span className="text-xs font-mono text-gray-300">
-              AVAILABLE FOR WORK
+            <span className="text-xs font-mono text-gray-300 tracking-wider">
+              SYSTEM ONLINE
             </span>
           </motion.div>
 
@@ -106,7 +131,7 @@ const Hero = () => {
 
         {/* Scroll Indicator */}
         <motion.div
-          className="absolute bottom-[-100px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50"
+          className="absolute bottom-[-80px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50"
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
