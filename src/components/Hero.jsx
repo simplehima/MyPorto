@@ -2,29 +2,38 @@ import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown, ArrowRight } from "lucide-react";
 import GlitchText from "@/components/GlitchText";
+import meImg from "@/assets/pictures/Me1.png";
 
 const Hero = () => {
   const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 500], [0, 200]);
-  const y2 = useTransform(scrollY, [0, 500], [0, -150]);
+
+  // Parallax: Reduced movement range for smoother mobile performance
+  const y1 = useTransform(scrollY, [0, 500], [0, 150]);
+  const y2 = useTransform(scrollY, [0, 500], [0, -100]);
 
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+      // UPDATE: Changed 'pt-20' to 'pt-36 md:pt-20'
+      // This adds extra space at the top specifically for mobile screens
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-36 md:pt-20"
     >
-      {/* Dynamic Background Elements */}
+      {/* --- BACKGROUND ELEMENTS (Optimized for Mobile) --- */}
+
+      {/* Blob 1: Reduced blur, added hardware acceleration */}
       <motion.div
         style={{ y: y1 }}
-        className="absolute top-20 right-[10%] w-64 h-64 rounded-full bg-cyan-500/10 blur-[80px] pointer-events-none"
-      />
-      <motion.div
-        style={{ y: y2 }}
-        className="absolute bottom-20 left-[10%] w-96 h-96 rounded-full bg-purple-600/10 blur-[100px] pointer-events-none"
+        className="absolute top-20 right-[10%] w-64 h-64 rounded-full bg-cyan-500/10 blur-3xl md:blur-[80px] pointer-events-none will-change-transform translate-z-0"
       />
 
-      {/* Grid Overlay for texture */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none"></div>
+      {/* Blob 2: Reduced blur, added hardware acceleration */}
+      <motion.div
+        style={{ y: y2 }}
+        className="absolute bottom-20 left-[10%] w-96 h-96 rounded-full bg-purple-600/10 blur-3xl md:blur-[100px] pointer-events-none will-change-transform translate-z-0"
+      />
+
+      {/* Grid Overlay: Removed blending on mobile to save battery/GPU */}
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 md:opacity-20 md:mix-blend-overlay pointer-events-none"></div>
 
       <div className="relative z-10 container mx-auto px-4 text-center">
         <motion.div
@@ -33,30 +42,31 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto flex flex-col items-center"
         >
-          {/* Profile Picture */}
+          {/* Profile Picture Section */}
           <div className="relative w-40 h-40 mb-8 group cursor-pointer">
-            {/* Rotating Border */}
-            <div className="absolute inset-[-6px] rounded-full border-2 border-transparent border-t-cyan-500 border-r-purple-500 border-b-pink-500 opacity-70 animate-spin-slow group-hover:opacity-100 transition-opacity"></div>
+            {/* Rotating Border: Optimized animation */}
+            <div className="absolute inset-[-6px] rounded-full border-2 border-transparent border-t-cyan-500 border-r-purple-500 border-b-pink-500 opacity-70 animate-spin-slow group-hover:opacity-100 transition-opacity will-change-transform"></div>
 
             {/* Glow Effect */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-500 to-purple-600 blur-[20px] opacity-20 group-hover:opacity-50 transition-opacity duration-500"></div>
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-500 to-purple-600 blur-xl md:blur-[20px] opacity-20 group-hover:opacity-50 transition-opacity duration-500"></div>
 
             {/* Image Container */}
-            <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-black box-glow z-10">
+            <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-black box-glow z-10 translate-z-0">
               <img
                 alt="Ibrahim Azab Profile"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 grayscale group-hover:grayscale-0"
-                src="src\assets\pictures\Me1.png"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 grayscale group-hover:grayscale-0 will-change-transform"
+                src={meImg}
+                loading="eager"
               />
 
               {/* Scanline Overlay */}
               <div className="absolute inset-0 profile-scanline opacity-40 pointer-events-none"></div>
 
-              {/* Glitch Overlay on Hover */}
+              {/* Glitch Overlay */}
               <div className="absolute inset-0 bg-cyan-500/20 opacity-0 group-hover:opacity-100 mix-blend-color-dodge transition-opacity duration-100"></div>
             </div>
 
-            {/* Decorative Status Indicator */}
+            {/* Status Indicator */}
             <div className="absolute bottom-2 right-2 z-20 w-6 h-6 bg-black rounded-full flex items-center justify-center border border-white/10">
               <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]"></div>
             </div>
