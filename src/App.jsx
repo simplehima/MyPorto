@@ -10,6 +10,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Home from "@/pages/Home";
 import Showcase from "@/pages/Showcase";
+// 1. Import the FloatingControls component
+import FloatingControls from "@/components/FloatingControls";
 
 // Scroll to top helper component
 const ScrollToTop = () => {
@@ -28,7 +30,7 @@ function App() {
         <div className="bg-noise" />
         <div className="cyber-grid fixed inset-0 opacity-20 pointer-events-none" />
 
-        {/* Ambient Glow Orbs - Fixed position to stay consistent across pages */}
+        {/* Ambient Glow Orbs */}
         <div className="fixed top-0 left-0 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none" />
         <div className="fixed bottom-0 right-0 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[100px] pointer-events-none" />
 
@@ -43,6 +45,9 @@ function App() {
 
         <Footer />
         <Toaster />
+
+        {/* 2. Add the Floating Controls here */}
+        <FloatingControls />
       </div>
     </Router>
   );
