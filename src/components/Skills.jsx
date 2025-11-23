@@ -46,7 +46,7 @@ const Skills = () => {
         { name: "Git & GitHub", level: 90 },
         { name: "VS Code", level: 95 },
         { name: "Firebase", level: 85 },
-        { name: "Postman", level: 80 },
+        { name: "Postman", level: 55 },
       ],
       colorKey: "blue",
     },

@@ -6,14 +6,41 @@ import { Link, useLocation } from "react-router-dom";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home"); // New state for active section
   const location = useLocation();
   const isHome = location.pathname === "/";
 
+  // Handle Scroll Background
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Handle Active Section Highlighting (ScrollSpy)
+  useEffect(() => {
+    if (!isHome) return; // Only run this on the home page
+
+    const sections = document.querySelectorAll("section[id]"); // Assuming your sections have IDs
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -35% 0px", // Triggers when section is roughly in the middle of screen
+      threshold: 0.1,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => sections.forEach((section) => observer.unobserve(section));
+  }, [isHome]);
 
   const navItems = [
     { name: "Home", href: "/#home" },
@@ -21,12 +48,12 @@ const Navbar = () => {
     { name: "Exp", href: "/#experience" },
     { name: "Skills", href: "/#skills" },
     { name: "Work", href: "/#projects" },
-    { name: "Showcase", href: "/showcase", isPage: true },
+    // { name: "Showcase", href: "/showcase", isPage: false },
     { name: "Contact", href: "/#contact" },
   ];
 
   const scrollToSection = (e, href) => {
-    if (!href.startsWith("/#")) return; // Let router handle non-hash links
+    if (!href.startsWith("/#")) return;
 
     if (isHome) {
       e.preventDefault();
@@ -34,12 +61,21 @@ const Navbar = () => {
       const element = document.querySelector(id);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
+        setActiveSection(id.substring(1)); // Manually set active to avoid lag
         setIsOpen(false);
       }
     } else {
-      // If not on home, the Link component handles navigation to /, then hash takes over
       setIsOpen(false);
     }
+  };
+
+  // Helper to determine if a link is active
+  const isActive = (item) => {
+    if (item.isPage) {
+      return location.pathname === item.href;
+    }
+    // Ensure we are on home page and the active section matches the href hash
+    return isHome && activeSection === item.href.replace("/#", "");
   };
 
   return (
@@ -64,7 +100,14 @@ const Navbar = () => {
         >
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 group">
+            <Link
+              to="/"
+              className="flex items-center gap-2 group"
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+                setActiveSection("home");
+              }}
+            >
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 className="p-2 bg-gradient-to-tr from-cyan-500 to-blue-600 rounded-xl group-hover:shadow-[0_0_20px_rgba(6,182,212,0.5)] transition-shadow duration-300"
@@ -78,20 +121,25 @@ const Navbar = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-1">
-              {navItems.map((item) =>
-                item.isPage ? (
+              {navItems.map((item) => {
+                const active = isActive(item);
+
+                return item.isPage ? (
                   <Link
                     key={item.name}
                     to={item.href}
                     className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 rounded-full hover:bg-white/5 group overflow-hidden ${
-                      location.pathname === item.href
+                      active
                         ? "text-cyan-400 bg-white/5"
                         : "text-gray-400 hover:text-white"
                     }`}
                   >
                     <span className="relative z-10">{item.name}</span>
-                    {location.pathname === item.href && (
-                      <span className="absolute bottom-0 left-0 w-full h-[2px] bg-cyan-500" />
+                    {active && (
+                      <motion.span
+                        layoutId="activeTab"
+                        className="absolute bottom-0 left-0 w-full h-[2px] bg-cyan-500"
+                      />
                     )}
                   </Link>
                 ) : (
@@ -99,13 +147,25 @@ const Navbar = () => {
                     key={item.name}
                     href={item.href}
                     onClick={(e) => scrollToSection(e, item.href)}
-                    className="relative px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors duration-300 rounded-full hover:bg-white/5 group overflow-hidden"
+                    className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 rounded-full hover:bg-white/5 group overflow-hidden ${
+                      active
+                        ? "text-cyan-400 bg-white/5"
+                        : "text-gray-400 hover:text-white"
+                    }`}
                   >
                     <span className="relative z-10">{item.name}</span>
-                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-cyan-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                    {/* Conditional Highlight Line */}
+                    <span
+                      className={`absolute bottom-0 left-0 w-full h-[2px] bg-cyan-500 transition-transform duration-300 origin-left ${
+                        active
+                          ? "scale-x-100"
+                          : "scale-x-0 group-hover:scale-x-100"
+                      }`}
+                    />
                   </a>
-                )
-              )}
+                );
+              })}
+
               <a
                 href="/#contact"
                 onClick={(e) => scrollToSection(e, "/#contact")}
@@ -136,13 +196,19 @@ const Navbar = () => {
             className="md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-xl border-b border-white/10 overflow-hidden"
           >
             <div className="px-4 py-6 space-y-2">
-              {navItems.map((item, index) =>
-                item.isPage ? (
+              {navItems.map((item, index) => {
+                const active = isActive(item);
+
+                return item.isPage ? (
                   <Link
                     key={item.name}
                     to={item.href}
                     onClick={() => setIsOpen(false)}
-                    className="block px-4 py-3 text-gray-400 hover:text-cyan-400 hover:bg-white/5 rounded-lg transition-all duration-300 text-lg font-medium"
+                    className={`block px-4 py-3 rounded-lg transition-all duration-300 text-lg font-medium ${
+                      active
+                        ? "text-cyan-400 bg-white/5"
+                        : "text-gray-400 hover:text-cyan-400 hover:bg-white/5"
+                    }`}
                   >
                     <span className="text-xs text-cyan-500/50 mr-2">
                       0{index + 1}.
@@ -154,15 +220,19 @@ const Navbar = () => {
                     key={item.name}
                     href={item.href}
                     onClick={(e) => scrollToSection(e, item.href)}
-                    className="block px-4 py-3 text-gray-400 hover:text-cyan-400 hover:bg-white/5 rounded-lg transition-all duration-300 text-lg font-medium"
+                    className={`block px-4 py-3 rounded-lg transition-all duration-300 text-lg font-medium ${
+                      active
+                        ? "text-cyan-400 bg-white/5"
+                        : "text-gray-400 hover:text-cyan-400 hover:bg-white/5"
+                    }`}
                   >
                     <span className="text-xs text-cyan-500/50 mr-2">
                       0{index + 1}.
                     </span>
                     {item.name}
                   </a>
-                )
-              )}
+                );
+              })}
             </div>
           </motion.div>
         )}

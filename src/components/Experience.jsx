@@ -1,25 +1,33 @@
 import React from "react";
 import { motion } from "framer-motion";
 import SectionTitle from "@/components/SectionTitle";
-import { Briefcase } from "lucide-react";
+import { Briefcase, Download, FileText } from "lucide-react";
 
 const Experience = () => {
   const experiences = [
     {
-      company: "Rush Hub",
-      role: "Mobile Developer",
-      period: "2023 — Present",
+      company: "Rush Hub / Emma Play",
+      role: "Maintenance Technician",
+      period: "Oct 2024 — Aug 2025",
       description:
-        "Architecting high-performance Flutter applications featuring real-time data synchronization. Optimized app performance by 40% through efficient state management.",
-      tech: ["Flutter", "Dart", "Firebase"],
+        "Managed preventive and on-spot maintenance for high-tech entertainment systems, including VR rigs and hydraulic machinery. Diagnosed complex electrical and mechanical faults to minimize downtime, ensuring high-performance standards across all arcade equipment.",
+      tech: ["Electronics", "VR Systems", "Hydraulics", "Solenoids"],
+    },
+    {
+      company: "Rush Hub",
+      role: "Freelance PCB Designer",
+      period: "Sep 2024 — Oct 2024",
+      description:
+        "Designed and fabricated single and double-layer PCBs for custom arcade applications. Engineered and programmed game arcade reader boards, successfully bridging the gap between hardware specifications and smooth software functionality.",
+      tech: ["PCB Design", "Embedded C", "Hardware Logic", "Prototyping"],
     },
     {
       company: "Smiles Inc",
-      role: "Software Engineer",
-      period: "2022 — 2023",
+      role: "Technical Operation Manager",
+      period: "Sep 2020 — Mar 2024",
       description:
-        "Led the development of IoT-integrated software solutions. Bridged the gap between hardware sensors and user-facing dashboards using C++ and Dart.",
-      tech: ["C++", "Arduino", "IoT"],
+        "Led technical project executions and system maintenance. Notable projects include a custom 'bike-riding blender' mechanism for Vodafone. Specialized in building Arduino-based solutions, relay automation for high-voltage devices, and network administration.",
+      tech: ["Arduino", "IoT", "C++", "Automation", "Project Mgmt"],
     },
   ];
 
@@ -58,7 +66,7 @@ const Experience = () => {
                 {exp.description}
               </p>
 
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
                 {exp.tech.map((t, i) => (
                   <span
                     key={i}
@@ -70,6 +78,48 @@ const Experience = () => {
               </div>
             </motion.div>
           ))}
+
+          {/* --- NEW DOWNLOAD CV SECTION --- */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="relative pl-8 md:pl-12 pt-12"
+          >
+            {/* Connector Line Fading Out */}
+            <div className="absolute left-[0px] top-0 bottom-0 w-[1px] bg-gradient-to-b from-white/10 to-transparent md:hidden" />
+
+            <a
+              href="/resume.pdf"
+              download="My_Resume.pdf"
+              className="group relative flex items-center gap-4 p-6 rounded-2xl bg-gradient-to-r from-white/5 to-transparent border border-white/10 hover:border-cyan-500/30 transition-all duration-300"
+            >
+              <div className="h-12 w-12 rounded-full bg-cyan-500/10 flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-black text-cyan-500 transition-all duration-300">
+                <Download size={24} />
+              </div>
+
+              <div className="flex-1">
+                <h4 className="text-white font-bold text-lg group-hover:text-cyan-400 transition-colors">
+                  Download Full Resume
+                </h4>
+                <p className="text-sm text-gray-400 group-hover:text-gray-300">
+                  Get a printable PDF version of my experience
+                </p>
+              </div>
+
+              <div className="hidden sm:block">
+                <FileText
+                  className="text-gray-600 group-hover:text-cyan-500/20 transition-colors"
+                  size={48}
+                  strokeWidth={1}
+                />
+              </div>
+
+              {/* Glow Effect */}
+              <div className="absolute inset-0 rounded-2xl bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl" />
+            </a>
+          </motion.div>
         </div>
       </div>
     </section>
