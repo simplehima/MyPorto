@@ -17,6 +17,51 @@ const Projects = () => {
 
   const projects = [
     {
+      title: "Flosy",
+      description:
+        "A sophisticated personal finance and wealth management platform. Features intuitive expense tracking, asset monitoring, and financial goal setting with a focus on data privacy and user-friendly visualizations.",
+      tags: ["PHP", "SQL", "CSS", "Finance", "Web App"],
+      image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&q=80&w=1000",
+      link: "https://flosy.ibrahim-azab.com/",
+      hasRepo: false,
+    },
+    {
+      title: "Kroga Masry",
+      description:
+        "An interactive platform designed for planning hangouts and events. built with React and Vite, it simplifies organizing social gatherings and managing event details with ease.",
+      tags: ["React", "Vite", "Tailwind CSS", "Event Planning", "Frontend"],
+      image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=1000",
+      link: "https://kroga.ibrahim-azab.com/",
+      hasRepo: false,
+    },
+    {
+      title: "Ideal Charge",
+      description:
+        "Next-gen IoT solution for EV infrastructure. Integrates ESP32 sensors with a Flutter interface to provide real-time charger availability, smart navigation, and advanced filtering for electric vehicle drivers.",
+      tags: ["Flutter", "ESP32", "IoT", "C++", "Smart City"],
+      image: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80&w=1000",
+      link: "https://ideal-charge.ibrahim-azab.com/",
+      hasRepo: false,
+    },
+    {
+      title: "EduEase",
+      description:
+        "An AI-driven mobile learning platform that transforms static PDFs into interactive video summaries. Uses LLMs for text analysis and AI avatars for engaging educational content delivery.",
+      tags: ["Flutter", "AI/ML", "LLM", "Python", "EdTech"],
+      image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=1000",
+      link: "https://eduease.ibrahim-azab.com/",
+      hasRepo: false,
+    },
+    {
+      title: "Karek-Keda",
+      description:
+        "AI-powered automotive diagnostic assistant. Leverages audio analysis and machine learning to detect engine issues through sound, providing real-time diagnosis and maintenance recommendations.",
+      tags: ["Flutter", "Audio processing", "AI", "Mobile App", "AutoTech"],
+      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1000",
+      link: "https://karekkeda.ibrahim-azab.com/",
+      hasRepo: false,
+    },
+    {
       title: "Marketing Intelligence (MI)",
       description:
         "A revolutionary marketing platform integrating holographic fans with AI. Features real-time age & gender detection, sign language translation, and dynamic content adaptation using YOLOv8 and custom IoT hardware.",

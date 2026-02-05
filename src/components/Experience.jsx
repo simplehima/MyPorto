@@ -6,6 +6,14 @@ import { Briefcase, Download, FileText } from "lucide-react";
 const Experience = () => {
   const experiences = [
     {
+      company: "SV Engineering Consultants (SVEC)",
+      role: "Software Developer & ERP Implementer",
+      period: "Jan 2025 — Present",
+      description:
+        "Specializing in ERP systems implementation using Frappe and ERPNext frameworks. Developing custom software solutions and modules to streamline engineering consultancy workflows, while maintaining high performance and data integrity.",
+      tech: ["Frappe", "ERPNext", "Python", "JavaScript", "MariaDB"],
+    },
+    {
       company: "Rush Hub / Emma Play",
       role: "Maintenance Technician",
       period: "Oct 2024 — Aug 2025",
